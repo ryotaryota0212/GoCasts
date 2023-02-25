@@ -42,6 +42,7 @@ func (d deck) toString() string {
 	return strings.Join([]string(d), ",")
 }
 
+// []byteでbyte型にキャストできる
 func (d deck) saveToFile(filename string) error {
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
@@ -59,6 +60,8 @@ func newDeckFromFile(filename string) deck {
 	return deck(s)
 }
 
+// デフォルトで同じシードを使うので時間を入れないと同じになる
+// 乱数生成器を毎回別のものにする
 func (d deck) shuffle() {
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
